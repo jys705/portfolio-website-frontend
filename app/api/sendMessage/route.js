@@ -57,7 +57,21 @@ export async function POST(request) {
             },
             body: JSON.stringify({
                 role: "user",
-                content: message
+                content: `다음 형식의 JSON으로만 응답해 주세요.  
+절대로 설명, 문장, 코드블록 없이 순수 JSON만 출력하세요:
+
+{
+  "answer": "GPT가 생성한 대답을 여기에 넣어주세요.",
+  "recommendations": [
+    "관련된 추천 질문 1",
+    "관련된 추천 질문 2",
+    "관련된 추천 질문 3"
+  ]
+}
+
+이제 다음 질문에 응답해 주세요:
+
+${message}`
             })
         });
 
@@ -167,11 +181,28 @@ export async function POST(request) {
                     
                     // 메타데이터 태그 제거
                     const cleanedContent = cleanAssistantResponse(assistantContent);
-                    
-                    return Response.json({
-                        response: cleanedContent,
-                        thread_id: threadId
-                    });
+
+                    // JSON 응답 파싱 시도
+                    let parsedResponse;
+                    let recommendations = [];
+
+                    try {
+                        // JSON 파싱 시도
+                        const jsonResponse = JSON.parse(cleanedContent);
+                        return Response.json({
+                            response: jsonResponse.answer || "",
+                            recommendations: jsonResponse.recommendations || [],
+                            thread_id: threadId
+                        });
+                    } catch (jsonError) {
+                        // JSON 파싱 실패 시 원본 응답 반환
+                        console.log("JSON 파싱 실패, 일반 텍스트로 처리:", jsonError);
+                        return Response.json({
+                            response: cleanedContent,
+                            recommendations: [],
+                            thread_id: threadId
+                        });
+                    }
                 }
             }
         }

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { motion } from "motion/react"
 import axios from 'axios'
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5001';
+const API_URL = '/api'; // Next.js API 라우트로 변경
 
 const Chat = ({ isDarkMode }) => {
   const [messages, setMessages] = useState([
@@ -13,7 +13,8 @@ const Chat = ({ isDarkMode }) => {
       text: "안녕하세요! 저에 대해 궁금한 점이 있으시면 무엇이든 물어보세요 🙂 ", 
       isUser: false,
       isTyping: false,
-      displayText: "안녕하세요! 저에 대해 궁금한 점이 있으시면 무엇이든 물어보세요 🙂 " 
+      displayText: "안녕하세요! 저에 대해 궁금한 점이 있으시면 무엇이든 물어보세요 🙂 ",
+      recommendations: []
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
@@ -93,7 +94,7 @@ const Chat = ({ isDarkMode }) => {
         }
       ]);
 
-      // Flask 서버로 POST 요청 (JSON 방식)
+      // Next.js API로 POST 요청 (JSON 방식)
       const response = await axios.post(`${API_URL}/sendMessage`, {
         message: inputMessage,
         thread_id: threadId
@@ -117,7 +118,92 @@ const Chat = ({ isDarkMode }) => {
             text: response.data.response,
             displayText: '', // 처음에는 빈 문자열로 시작
             isUser: false,
-            isTyping: true
+            isTyping: true,
+            recommendations: response.data.recommendations || []
+          }
+        ]);
+      } else if (response.data.error) {
+        // 오류 메시지 처리
+        setMessages(prev => [
+          ...prev,
+          {
+            id: prev.length + 1,
+            text: `오류: ${response.data.error}`,
+            displayText: `오류: ${response.data.error}`,
+            isUser: false
+          }
+        ]);
+      }
+    } catch (error) {
+      // 로딩 메시지 제거
+      setMessages(prev => prev.filter(msg => !msg.isLoading));
+      
+      // 오류 메시지 추가
+      setMessages(prev => [
+        ...prev,
+        {
+          id: prev.length + 1,
+          text: 'AI 서버와 통신 중 오류가 발생했습니다.',
+          displayText: 'AI 서버와 통신 중 오류가 발생했습니다.',
+          isUser: false
+        }
+      ]);
+      console.error('에러 상세 내용:', error);
+    }
+  };
+
+  // 추천 질문 전송 함수
+  const handleRecommendationClick = async (recommendation) => {
+    if (isTyping) return;
+
+    // 사용자 메시지 추가
+    const newUserMessage = {
+      id: messages.length + 1,
+      text: recommendation,
+      displayText: recommendation,
+      isUser: true
+    };
+    setMessages([...messages, newUserMessage]);
+
+    try {
+      // 로딩 메시지 추가
+      setMessages(prev => [
+        ...prev,
+        {
+          id: prev.length + 1,
+          text: '',
+          displayText: '',
+          isUser: false,
+          isLoading: true
+        }
+      ]);
+
+      // Next.js API로 POST 요청 (JSON 방식)
+      const response = await axios.post(`${API_URL}/sendMessage`, {
+        message: recommendation,
+        thread_id: threadId
+      });
+
+      // 로딩 메시지 제거
+      setMessages(prev => prev.filter(msg => !msg.isLoading));
+
+      // 응답에서 스레드 ID 업데이트
+      if (response.data.thread_id) {
+        setThreadId(response.data.thread_id);
+      }
+
+      // AI 응답 추출 및 추가
+      if (response.data.response) {
+        setIsTyping(true);
+        setMessages(prev => [
+          ...prev,
+          {
+            id: prev.length + 1,
+            text: response.data.response,
+            displayText: '', // 처음에는 빈 문자열로 시작
+            isUser: false,
+            isTyping: true,
+            recommendations: response.data.recommendations || []
           }
         ]);
       } else if (response.data.error) {
@@ -151,34 +237,44 @@ const Chat = ({ isDarkMode }) => {
   };
 
   function renderMessageText(message) {
-    const { text, displayText, isLoading } = message;
+    const { text, displayText, isLoading, recommendations } = message;
     
-    // 로딩 메시지인 경우
+    // 로딩 메시지
     if (isLoading) {
-      return (
-        <div className="flex items-center justify-center">
-          <div className="dots-container">
-            <div className="dot"></div>
-            <div className="dot"></div>
-            <div className="dot"></div>
-          </div>
-        </div>
-      );
+        return (
+            <div className="flex items-center justify-center">
+                <div className="dots-container">
+                    <div className="dot"></div>
+                    <div className="dot"></div>
+                    <div className="dot"></div>
+                </div>
+            </div>
+        );
     }
     
-    // 코드 블록 감지
-    const codeBlockMatch = displayText.match(/```(.*?)\\n([\\s\\S]*?)```/);
-    if (codeBlockMatch) {
-      const language = codeBlockMatch[1];
-      const code = codeBlockMatch[2].replace(/\\n/g, '\n'); // 줄바꿈 처리
-      return (
-        <pre style={{background: '#222', color: '#fff', padding: 10, borderRadius: 8, overflowX: 'auto'}}>
-          <code>
-            {code}
-          </code>
-        </pre>
-      );
+    // 추천 질문이 있고 타이핑이 완료된 경우에만 표시
+    if (recommendations && recommendations.length > 0 && displayText === text) {
+        return (
+            <div className="space-y-3">
+                <div>{displayText}</div>
+                <div className="mt-4">
+                    <ul className="space-y-2">
+                        {recommendations.map((rec, index) => (
+                            <li key={index}>
+                                <button
+                                    onClick={() => handleRecommendationClick(rec)}
+                                    className="w-full text-left px-4 py-2 text-sm bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 transition-colors"
+                                >
+                                    {rec}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        );
     }
+    
     // 일반 텍스트
     return <span>{displayText}</span>;
   }

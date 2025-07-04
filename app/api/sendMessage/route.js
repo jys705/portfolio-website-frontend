@@ -80,21 +80,18 @@ export async function POST(request) {
             },
             body: JSON.stringify({
                 role: "user",
-                content: `다음 형식의 JSON으로만 응답해 주세요.  
-절대로 설명, 문장, 코드블록 없이 순수 JSON만 출력하세요:
+                content: `반드시 다음 JSON 형식으로만 응답하세요. 메타데이터 태그(【...】)나 참조 정보는 포함하지 마세요:
 
 {
-  "answer": "GPT가 생성한 대답을 여기에 넣어주세요.",
+  "answer": "여기에 한국어로 깔끔한 답변만 작성하세요",
   "recommendations": [
-    "관련된 추천 질문 1",
-    "관련된 추천 질문 2",
-    "관련된 추천 질문 3"
+    "관련 질문 1",
+    "관련 질문 2", 
+    "관련 질문 3"
   ]
 }
 
-이제 다음 질문에 응답해 주세요:
-
-${message}`
+사용자 질문: ${message}`
             })
         });
 
@@ -209,28 +206,61 @@ ${message}`
                         // JSON 파싱 시도
                         const jsonResponse = JSON.parse(cleanedContent);
                         
-                        // MongoDB에 채팅 기록 저장 (recommendations 포함)
-                        await saveChatHistory(
-                            message, 
-                            jsonResponse.answer || "", 
-                            jsonResponse.recommendations || []
-                        )
-                        
-                        return Response.json({
-                            response: jsonResponse.answer || "",
-                            recommendations: jsonResponse.recommendations || [],
-                            thread_id: threadId
-                        });
+                        // 파싱된 JSON이 올바른 형식인지 확인
+                        if (jsonResponse.answer && typeof jsonResponse.answer === 'string') {
+                            // MongoDB에 채팅 기록 저장
+                            await saveChatHistory(
+                                message, 
+                                jsonResponse.answer || "", 
+                                jsonResponse.recommendations || []
+                            )
+                            
+                            return Response.json({
+                                response: jsonResponse.answer,
+                                recommendations: jsonResponse.recommendations || [],
+                                thread_id: threadId
+                            });
+                        } else {
+                            throw new Error('Invalid JSON structure');
+                        }
                     } catch (jsonError) {
-                        // JSON 파싱 실패 시 원본 응답 반환
                         console.log("JSON 파싱 실패, 일반 텍스트로 처리:", jsonError);
+                        console.log("원본 응답:", cleanedContent);
                         
-                        // MongoDB에 채팅 기록 저장 (recommendations는 빈 배열)
-                        await saveChatHistory(message, cleanedContent, [])
+                        // JSON 문자열이 포함된 경우 다시 추출 시도
+                        let finalAnswer = cleanedContent;
+                        let finalRecommendations = [];
+                        
+                        // JSON 패턴 찾기
+                        const jsonMatch = cleanedContent.match(/\{[\s\S]*"answer"[\s\S]*\}/);
+                        if (jsonMatch) {
+                            try {
+                                const extractedJson = JSON.parse(jsonMatch[0]);
+                                if (extractedJson.answer) {
+                                    finalAnswer = extractedJson.answer;
+                                    finalRecommendations = extractedJson.recommendations || [];
+                                }
+                            } catch (e) {
+                                console.log("JSON 추출 실패:", e);
+                            }
+                        }
+                        
+                        // 여전히 JSON 형식이면 기본 메시지 사용
+                        if (finalAnswer.includes('"answer"') || finalAnswer.includes('"recommendations"')) {
+                            finalAnswer = "죄송합니다. 응답을 처리하는 중 오류가 발생했습니다. 다시 시도해 주세요.";
+                            finalRecommendations = [
+                                "다른 질문을 해보세요",
+                                "포트폴리오에 대해 알려주세요",
+                                "기술 스택이 무엇인가요?"
+                            ];
+                        }
+                        
+                        // MongoDB에 채팅 기록 저장
+                        await saveChatHistory(message, finalAnswer, finalRecommendations)
                         
                         return Response.json({
-                            response: cleanedContent,
-                            recommendations: [],
+                            response: finalAnswer,
+                            recommendations: finalRecommendations,
                             thread_id: threadId
                         });
                     }

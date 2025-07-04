@@ -1,3 +1,6 @@
+// MongoDB 연결 추가
+import clientPromise from '../../../lib/mongodb'
+
 // 환경 변수에서 API 키 및 Assistant ID 가져오기
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
 const ASSISTANT_ID = process.env.ASSISTANT_ID;
@@ -6,6 +9,26 @@ const ASSISTANT_ID = process.env.ASSISTANT_ID;
 function cleanAssistantResponse(text) {
     // 【숫자:숫자†source】 형식의 메타데이터 제거
     return text.replace(/【\d+:\d+†source】/g, '');
+}
+
+// MongoDB에 채팅 기록 저장 함수 - 데이터베이스 이름 수정
+async function saveChatHistory(userMessage, assistantResponse, recommendations = []) {
+    try {
+        const client = await clientPromise
+        const db = client.db("chatbotDB") // ✅ 변경: portfolio_chat → chatbotDB
+        const collection = db.collection("messages") // ✅ 이미 맞음
+        
+        await collection.insertOne({
+            userMessage,
+            assistantResponse,
+            recommendations,
+            timestamp: new Date().toISOString()
+        })
+        
+        console.log(`채팅 기록 저장 완료`)
+    } catch (error) {
+        console.error('채팅 기록 저장 오류:', error)
+    }
 }
 
 export async function POST(request) {
@@ -182,13 +205,17 @@ ${message}`
                     // 메타데이터 태그 제거
                     const cleanedContent = cleanAssistantResponse(assistantContent);
 
-                    // JSON 응답 파싱 시도
-                    let parsedResponse;
-                    let recommendations = [];
-
                     try {
                         // JSON 파싱 시도
                         const jsonResponse = JSON.parse(cleanedContent);
+                        
+                        // MongoDB에 채팅 기록 저장 (recommendations 포함)
+                        await saveChatHistory(
+                            message, 
+                            jsonResponse.answer || "", 
+                            jsonResponse.recommendations || []
+                        )
+                        
                         return Response.json({
                             response: jsonResponse.answer || "",
                             recommendations: jsonResponse.recommendations || [],
@@ -197,6 +224,10 @@ ${message}`
                     } catch (jsonError) {
                         // JSON 파싱 실패 시 원본 응답 반환
                         console.log("JSON 파싱 실패, 일반 텍스트로 처리:", jsonError);
+                        
+                        // MongoDB에 채팅 기록 저장 (recommendations는 빈 배열)
+                        await saveChatHistory(message, cleanedContent, [])
+                        
                         return Response.json({
                             response: cleanedContent,
                             recommendations: [],

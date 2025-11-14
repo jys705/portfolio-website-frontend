@@ -255,7 +255,7 @@ const Chat = ({ isDarkMode }) => {
     // 추천 질문이 있고 타이핑이 완료된 경우에만 표시
     if (recommendations && recommendations.length > 0 && displayText === text) {
         return (
-            <div className="space-y-3">
+            <div className="space-y-3 font-MaruBuri">
                 <div>{displayText}</div>
                 <div className="mt-4">
                     <ul className="space-y-2">
@@ -274,9 +274,9 @@ const Chat = ({ isDarkMode }) => {
             </div>
         );
     }
-    
+
     // 일반 텍스트
-    return <span>{displayText}</span>;
+    return <span className="font-MaruBuri">{displayText}</span>;
   }
 
   return (
@@ -285,7 +285,7 @@ const Chat = ({ isDarkMode }) => {
       whileInView={{opacity: 1}}
       transition={{duration: 1}}
       id='chat'
-      className='w-full max-w-[100vw] px-4 sm:px-8 md:px-[12%] mt-20 py-16 scroll-mt-20 relative'
+      className='w-full max-w-[100vw] px-4 sm:px-8 md:px-[12%] mt-20 py-16 scroll-mt-0 relative'
     >
       <div className='absolute left-1/2 transform -translate-x-1/2 -top-[5%] w-[120%] h-[110%] bg-[url("/footer-bg-color.png")] bg-no-repeat bg-center bg-[length:120%_100%] dark:bg-none z-[-1]' style={{maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 100%)', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 100%)'}}></div>
       

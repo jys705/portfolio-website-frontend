@@ -42,12 +42,9 @@ const About = ({isDarkMode}) => {
             whileInView={{opacity: 1}}
             transition={{duration: 0.6, delay: 0.8}}
             className='flex-1 px-1'>
-                <p className='mb-10 max-w-2xl font-Ovo'
-                >I am an experienced Frontend Developer with over a decade 
-                of professional expertise in the field. Throughout my 
-                career, I have had the privilege of collaborating with 
-                prestigious organizations, contributing to their success 
-                and growth.</p>
+                <p className='mb-10 max-w-2xl font-MaruBuri'
+                >저는 DevSecOps 분야에 깊은 관심을 가지고, 보안과 자동화가 조화를 이루는 개발 환경을 연구하는 소프트웨어학부 학생입니다.
+학습과 프로젝트를 통해 안전하고 효율적인 시스템을 구축하는 방법을 탐구하고자 합니다.</p>
 
                 <motion.ul 
                 initial={{opacity: 0}}
@@ -69,7 +66,7 @@ const About = ({isDarkMode}) => {
                             mt-3'/>
                             <h3 className='my-4 font-semibold
                             text-gray-700 dark:text-white'>{title}</h3>
-                            <p className='text-gray-600 text-sm dark:text-white/80'>
+                            <p className='text-gray-600 text-sm dark:text-white/80 font-MaruBuri'>
                             {description}</p>
                         </motion.li>
                     ))}
@@ -81,20 +78,20 @@ const About = ({isDarkMode}) => {
                 transition={{delay: 1.3, duration: 0.5}}
                 className='mt-6 text-gray-700 font-Ovo dark:text-white/80'>Tools I use</motion.h4>
 
-                <motion.ul 
+                <motion.ul
                 initial={{opacity: 0}}
                 whileInView={{opacity: 1}}
                 transition={{delay: 1.5, duration: 0.6}}
                 className='flex items-center gap-3 sm:gap-5'>
                     {toolsData.map((tool, index)=>(
-                        <motion.li 
+                        <motion.li
                         whileHover={{scale: 1.1}}
                         className='flex items-center justify-center
                         w-12 sm:w-14 aspect-square border border-gray-400
-                        rounded-lg cursor-pointer hover:-translate-y-1 
+                        rounded-lg cursor-pointer hover:-translate-y-1
                         duration-500'
                         key={index}>
-                            <Image src={tool} alt='Tool' className='w-5
+                            <Image src={isDarkMode ? tool.dark : tool.light} alt='Tool' className='w-5
                             sm:w-7'/>
                         </motion.li>
 

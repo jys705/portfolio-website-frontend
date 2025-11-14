@@ -8,11 +8,21 @@ import project_icon_dark from './project-icon-dark.png';
 import vscode from './vscode.png';
 import firebase from './firebase.png';
 import figma from './figma.png';
+import aws from './aws.png';
+import aws_black from './aws-black.png';
+import react from './react.png';
+import react_black from './react-black.png';
 import git from './git.png';
 import mongodb from './mongodb.png';
+import flask from './flask.png';
+import kali from './kali.png';
 import right_arrow_white from './right-arrow-white.png';
 import logo from './logo.png';
 import logo_dark from './logo_dark.png';
+import security_icon from './security-icon.png';
+import development_icon from './development-icon.png';
+import cloud_icon from './cloud-icon.png';
+import programming_icon from './programming-icon.png';
 import mail_icon from './mail_icon.png';
 import mail_icon_dark from './mail_icon_dark.png';
 import profile_img from './profile-img.png';
@@ -47,11 +57,21 @@ export const assets = {
     vscode,
     firebase,
     figma,
+    aws,
+    aws_black,
+    react,
+    react_black,
+    kali,
     git,
     mongodb,
+    flask,
     right_arrow_white,
     logo,
     logo_dark,
+    security_icon,
+    development_icon,
+    cloud_icon,
+    programming_icon,
     mail_icon,
     mail_icon_dark,
     profile_img,
@@ -100,18 +120,23 @@ export const workData = [
 ]
 
 export const serviceData = [
-    { icon: assets.web_icon, title: 'Web design', description: 'Web development is the process of building, programming...', link: '' },
-    { icon: assets.mobile_icon, title: 'Mobile app', description: 'Mobile app development involves creating software for mobile devices...', link: '' },
-    { icon: assets.ui_icon, title: 'UI/UX design', description: 'UI/UX design focuses on creating a seamless user experience...', link: '' },
-    { icon: assets.graphics_icon, title: 'Graphics design', description: 'Creative design solutions to enhance visual communication...', link: '' },
+    { icon: assets.security_icon, title: 'Security', description: '인프라, 보안관제, 침해대응&CERT, 모의해킹, 클라우드 보안 과정입니다.', link: 'https://itcase.tistory.com/category/IT_%EC%A0%95%EB%B3%B4%EB%B3%B4%EC%95%88' },
+    { icon: assets.development_icon, title: 'Development', description: '웹의 프론트엔드부터 백엔드, 데이터베이스까지 전 과정을 설계하고 구현합니다.', link: 'https://itcase.tistory.com/category/IT_%EA%B0%9C%EB%B0%9C' },
+    { icon: assets.cloud_icon, title: 'Cloud', description: '클라우드는 애플리케이션을 안정적으로 배포하고 확장할 수 있도록 돕는 인프라 환경입니다.', link: 'https://itcase.tistory.com/category/AWS' },
+    { icon: assets.programming_icon, title: 'Programming', description: '다양한 코딩 문제를 해결하며 논리적 사고력과 문제 해결 능력을 키우고 있습니다.', link: 'https://itcase.tistory.com/category/%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8' },
 ]
 
 export const infoList = [
-    { icon: assets.code_icon, iconDark: assets.code_icon_dark, title: 'Languages', description: 'HTML, CSS, JavaScript React Js, Next Js' },
-    { icon: assets.edu_icon, iconDark: assets.edu_icon_dark, title: 'Education', description: 'B.Tech in Computer Science' },
-    { icon: assets.project_icon, iconDark: assets.project_icon_dark, title: 'Projects', description: 'Built more than 5 projects' }
+    { icon: assets.code_icon, iconDark: assets.code_icon_dark, title: 'Languages', description: 'HTML, CSS, JavaScript React Js, Next.Js, Python, Java' },
+    { icon: assets.edu_icon, iconDark: assets.edu_icon_dark, title: 'Education', description: 'Kookmin University — School of Software' },
+    { icon: assets.project_icon, iconDark: assets.project_icon_dark, title: 'Projects', description: 'Learning through ongoing projects' }
 ];
 
 export const toolsData = [
-    assets.vscode, assets.firebase, assets.mongodb, assets.figma, assets.git
+    { light: assets.vscode, dark: assets.vscode },
+    { light: assets.react, dark: assets.react_black },
+    { light: assets.mongodb, dark: assets.mongodb },
+    { light: assets.aws, dark: assets.aws_black },
+    { light: assets.git, dark: assets.git },
+    { light: assets.kali, dark: assets.kali }
 ];

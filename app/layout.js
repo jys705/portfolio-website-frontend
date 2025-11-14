@@ -1,4 +1,5 @@
 import { Outfit, Ovo } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
 const outfit = Outfit({
@@ -7,6 +8,32 @@ const outfit = Outfit({
 
 const ovo = Ovo({
   subsets: ["latin"], weight: ["400"]
+});
+
+const maruBuri = localFont({
+  src: [
+    {
+      path: '../public/fonts/MaruBuri-Regular.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/MaruBuri-Light.ttf',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/MaruBuri-SemiBold.ttf',
+      weight: '600',
+      style: 'normal',
+    },
+    {
+      path: '../public/fonts/MaruBuri-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-maru-buri',
 });
 
 export const metadata = {
@@ -23,7 +50,7 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
       </head>
       <body
-        className={`${outfit.className} ${ovo.className} antialiased leading-8
+        className={`${outfit.className} ${ovo.className} ${maruBuri.variable} antialiased leading-8
         overflow-x-hidden dark:bg-darkTheme dark:text-white m-0 p-0 w-full max-w-[100vw]`}
       >
         {children}

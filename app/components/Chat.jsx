@@ -263,7 +263,7 @@ const Chat = ({ isDarkMode }) => {
                             <li key={index}>
                                 <button
                                     onClick={() => handleRecommendationClick(rec)}
-                                    className="w-full text-left px-4 py-2 text-sm bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 transition-colors"
+                                    className="w-full text-left px-4 py-2 text-sm bg-gray-50 dark:bg-gray-800/50 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 transition-colors font-MaruBuri"
                                 >
                                     {rec}
                                 </button>
@@ -280,14 +280,14 @@ const Chat = ({ isDarkMode }) => {
   }
 
   return (
-    <motion.div 
+    <motion.div
       initial={{opacity: 0}}
       whileInView={{opacity: 1}}
       transition={{duration: 1}}
-      id='chat' 
+      id='chat'
       className='w-full max-w-[100vw] px-4 sm:px-8 md:px-[12%] mt-20 py-16 scroll-mt-20 relative'
     >
-      <div className='absolute left-1/2 transform -translate-x-1/2 -top-[5%] w-[120%] h-[110%] bg-[url("/footer-bg-color.png")] bg-no-repeat bg-center bg-[length:120%_100%] dark:bg-none z-[-1]'></div>
+      <div className='absolute left-1/2 transform -translate-x-1/2 -top-[5%] w-[120%] h-[110%] bg-[url("/footer-bg-color.png")] bg-no-repeat bg-center bg-[length:120%_100%] dark:bg-none z-[-1]' style={{maskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 100%)', WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30%, rgba(0,0,0,1) 100%)'}}></div>
       
       <div className='mx-auto max-w-full md:max-w-[85%] border-[0.5px] border-gray-400 dark:border-white/70 rounded-2xl py-12 px-4 sm:px-8 bg-white/30 dark:bg-darkHover/10 backdrop-blur-sm shadow-lg'>
         <motion.h4 
@@ -308,13 +308,14 @@ const Chat = ({ isDarkMode }) => {
           Conversational Chatbot
         </motion.h2>
 
-        <motion.p 
+        <motion.p
           initial={{opacity: 0}}
           whileInView={{opacity: 1}}
           transition={{delay: 0.7, duration: 0.5}}
-          className='text-center max-w-2xl mx-auto mt-5 mb-16 font-Ovo px-2'
+          className='text-center max-w-2xl mx-auto mt-5 mb-16 font-MaruBuri px-2'
         >
-          Do you have any questions? Ask the chatbot. We will answer information about the portfolio owner.
+          궁금한 점이 있으신가요? 챗봇에게 물어보세요.<br />
+          포트폴리오 소유자에 대한 정보를 답변해드립니다.
         </motion.p>
 
         <motion.div 
@@ -340,10 +341,10 @@ const Chat = ({ isDarkMode }) => {
                     animate={{ opacity: 1, y: 0 }}
                     className={`flex mb-4 ${message.isUser ? 'justify-end' : 'justify-start'}`}
                   >
-                    <div 
-                      className={`max-w-[80%] px-4 py-3 rounded-2xl ${
-                        message.isUser 
-                          ? 'bg-black/80 text-white dark:bg-darkTheme dark:border-[0.5px] dark:border-white/90' 
+                    <div
+                      className={`max-w-[80%] px-4 py-3 rounded-2xl font-MaruBuri ${
+                        message.isUser
+                          ? 'bg-black/80 text-white dark:bg-darkTheme dark:border-[0.5px] dark:border-white/90'
                           : 'bg-lightHover text-black dark:bg-darkHover/70 dark:text-white/90 dark:border-[0.5px] dark:border-white/90'
                       }`}
                     >
@@ -370,12 +371,12 @@ const Chat = ({ isDarkMode }) => {
               className='flex items-center rounded-full border-[0.5px] border-gray-400 dark:border-white/50 bg-white dark:bg-darkHover/30 shadow-md'
             >
               <div className='flex-grow'>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
-                  placeholder='무엇이든 물어보세요' 
-                  className='w-full py-3 px-5 bg-transparent outline-none text-black dark:text-white/90 placeholder-gray-500 dark:placeholder-gray-400 placeholder:text-sm'
+                  placeholder='무엇이든 물어보세요'
+                  className='w-full py-3 px-5 bg-transparent outline-none text-black dark:text-white/90 placeholder-gray-500 dark:placeholder-gray-400 placeholder:text-sm font-MaruBuri'
                   disabled={isTyping}
                 />
               </div>

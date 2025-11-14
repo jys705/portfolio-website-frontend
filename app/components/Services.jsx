@@ -25,13 +25,13 @@ const Services = () => {
       className='text-center text-5xl font-Ovo px-2 break-words'>
         My Services</motion.h2>
 
-        <motion.p 
+        <motion.p
         initial={{opacity: 0}}
         whileInView={{opacity: 1}}
         transition={{delay: 0.7, duration: 0.5}}
-        className='text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo px-2'>
-            I am a forntend developer from California, USA with 10 years of experienced
-            in multiple companies like Microsoft, Tesla and Apple.</motion.p>
+        className='text-center max-w-2xl mx-auto mt-5 mb-12 font-MaruBuri px-2'>
+            저는 안정적이고 효율적인 개발 환경을 지향하는 소프트웨어 전공자로,<br />
+            DevSecOps 기반의 백엔드·클라우드·보안 기술을 함께 학습하고 있습니다.</motion.p>
 
             <motion.div 
             initial={{opacity: 0}}
@@ -47,8 +47,8 @@ const Services = () => {
                     hover:-translate-y-1 duration-500 dark:hover:bg-darkHover
                     dark:hover:shadow-white'>
                         <Image src={icon} alt='' className='w-10'/>
-                        <h3 className='text-lg my-4 text-gray-700 dark:text-white'>{title}</h3>
-                        <p className='text-sm text-gray-600 leading-5 dark:text-white/80'>
+                        <h3 className='text-lg my-4 text-gray-700 dark:text-white font-MaruBuri'>{title}</h3>
+                        <p className='text-sm text-gray-600 leading-5 dark:text-white/80 font-MaruBuri'>
                             {description}
                         </p>
                         <a href={link} className='flex items-center gap-2 text-sm mt-5'>

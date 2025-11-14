@@ -46,23 +46,24 @@ const Navbar = ({isDarkMode, setIsDarkMode}) => {
         <Image src={assets.header_bg_color} alt='' className='w-full' />
     </div>
     
-        <nav className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex 
-            items-center z-50 
+        <nav className={`w-full fixed px-5 lg:px-8 xl:px-[8%] py-4 flex
+            items-center z-50 transition-all duration-500 min-h-[86px]
             ${isScroll ? "bg-white bg-opacity-50 backdrop-blur-lg shadow-sm dark:bg-darkTheme dark:shadow-white/20" : ""}`}>
             <div className="flex items-center justify-between w-full">
-              <a href="#top" className="flex-shrink-0">
-                  <Image src={isDarkMode ? assets.logo_dark : assets.logo} alt='' className='w-28 alt="" 
-                  cursor-pointer'/>
-              </a>
+              <a href="#contact" className='hidden lg:flex items-center gap-3
+              px-10 py-2.5 border border-gray-500 rounded-full font-Ovo
+              dark:border-white/50'>Contact
+              <Image src={isDarkMode ? assets.arrow_icon_dark : assets.arrow_icon} alt=""
+              className='w-3'/></a>
 
-              <div className="flex-1 flex justify-center mx-2 lg:mx-4">
-                <ul className={`hidden md:flex items-center md:gap-4 lg:gap-6 xl:gap-8 
-                    rounded-full md:px-4 lg:px-8 xl:px-12 py-3 mx-auto overflow-x-auto
+              <div className="absolute left-1/2 -translate-x-1/2">
+                <ul className={`hidden md:flex items-center md:gap-4 lg:gap-6 xl:gap-8
+                    rounded-full md:px-4 lg:px-8 xl:px-12 py-3 overflow-x-auto
                     ${isScroll ? "" : "bg-white shadow-sm bg-opacity-50 dark:border dark:border-white/50 dark:bg-transparent"} `}>
                     <li><a className='font-Ovo text-nowrap' href="#top">Home</a></li>
                     <li><a className='font-Ovo text-nowrap' href="#about">About me</a></li>
                     <li><a className='font-Ovo text-nowrap' href="#services">Services</a></li>
-                    <li><a className='font-Ovo text-nowrap' href="#work">My work</a></li>
+                    {/* <li><a className='font-Ovo text-nowrap' href="#work">My work</a></li> */}
                     <li><a className='font-Ovo text-nowrap' href="#contact">Contact me</a></li>
                     <li className='relative ml-1'>
                       <a className='font-Ovo text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors relative inline-block text-nowrap' href="#chat">
@@ -75,16 +76,10 @@ const Navbar = ({isDarkMode, setIsDarkMode}) => {
                 </ul>
               </div>
 
-              <div className='flex items-center gap-4 flex-shrink-0'>
+              <div className='flex items-center gap-4 flex-shrink-0 ml-auto'>
                   <button onClick={()=> setIsDarkMode(prev => !prev)}>
                       <Image src={isDarkMode ? assets.sun_icon : assets.moon_icon} alt='' className='w-6' />
                   </button>
-
-                  <a href="#contact" className='hidden lg:flex items-center gap-3
-                  px-10 py-2.5 border border-gray-500 rounded-full ml-4 font-Ovo
-                  dark:border-white/50'>Contact 
-                  <Image src={isDarkMode ? assets.arrow_icon_dark : assets.arrow_icon} alt="" 
-                  className='w-3'/></a>
 
                   <button className='block md:hidden ml-3' onClick={openMenu}>
                       <Image src={isDarkMode ? assets.menu_white : assets.menu_black} alt='' className='w-6' />
@@ -105,7 +100,7 @@ const Navbar = ({isDarkMode, setIsDarkMode}) => {
                 <li><a className='font-Ovo' onClick={closeMenu} href="#top">Home</a></li>
                 <li><a className='font-Ovo' onClick={closeMenu} href="#about">About me</a></li>
                 <li><a className='font-Ovo' onClick={closeMenu} href="#services">Services</a></li>
-                <li><a className='font-Ovo' onClick={closeMenu} href="#work">My work</a></li>
+                {/* <li><a className='font-Ovo' onClick={closeMenu} href="#work">My work</a></li> */}
                 <li><a className='font-Ovo' onClick={closeMenu} href="#contact">Contact me</a></li>
                 <li className='mt-2 border-t border-gray-300 dark:border-gray-600 pt-2'>
                   <a className='font-Ovo text-gray-500 dark:text-gray-400' onClick={closeMenu} href="#chat">

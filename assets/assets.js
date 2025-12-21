@@ -120,10 +120,10 @@ export const workData = [
 ]
 
 export const serviceData = [
-    { icon: assets.security_icon, title: 'Security', description: '인프라, 보안관제, 침해대응&CERT, 모의해킹, 클라우드 보안 과정입니다.', link: 'https://itcase.tistory.com/category/IT_%EC%A0%95%EB%B3%B4%EB%B3%B4%EC%95%88' },
-    { icon: assets.development_icon, title: 'Development', description: '웹의 프론트엔드부터 백엔드, 데이터베이스까지 전 과정을 설계하고 구현합니다.', link: 'https://itcase.tistory.com/category/IT_%EA%B0%9C%EB%B0%9C' },
-    { icon: assets.cloud_icon, title: 'Cloud', description: '클라우드는 애플리케이션을 안정적으로 배포하고 확장할 수 있도록 돕는 인프라 환경입니다.', link: 'https://itcase.tistory.com/category/AWS' },
-    { icon: assets.programming_icon, title: 'Programming', description: 'Python과 Java를 중심으로 다양한 코딩 문제를 해결하며 논리적 사고력과 문제 해결 능력을 키우고 있습니다.', link: 'https://itcase.tistory.com/category/%EC%BD%94%EB%94%A9%ED%85%8C%EC%8A%A4%ED%8A%B8' },
+    { icon: assets.security_icon, title: 'Security', description: '인프라, 보안관제, 침해대응&CERT, 모의해킹, 클라우드 보안 기초 과정입니다.', link: 'https://itcase.tistory.com/category/Security' },
+    { icon: assets.development_icon, title: 'Development', description: '웹의 프론트엔드부터 백엔드, 데이터베이스까지 전 과정을 설계하고 구현합니다.', link: 'https://itcase.tistory.com/category/Dev' },
+    { icon: assets.cloud_icon, title: 'Cloud', description: '클라우드는 애플리케이션을 안정적으로 배포하고 확장할 수 있도록 돕는 인프라 환경입니다.', link: 'https://itcase.tistory.com/category/Cloud' },
+    { icon: assets.programming_icon, title: 'Programming', description: 'Python과 Java를 중심으로 다양한 코딩 문제를 해결하며 논리적 사고력과 문제 해결 능력을 키우고 있습니다.', link: 'https://itcase.tistory.com/category/Programming' },
 ]
 
 export const infoList = [

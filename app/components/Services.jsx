@@ -38,7 +38,7 @@ const Services = () => {
             whileInView={{opacity: 1}}
             transition={{delay: 0.9, duration: 0.6}}
             className='grid grid-cols-auto gap-6 my-10'>
-                {serviceData.map(({icon, title, description, link}, index)=>(
+                {serviceData.map(({icon, title, description, link, techStack}, index)=>(
                     <motion.div 
                     whileHover={{scale: 1.05}}
                     key={index}
@@ -54,6 +54,11 @@ const Services = () => {
                         <a href={link} className='flex items-center gap-2 text-sm mt-5'>
                             Read more <Image alt='' src={assets.right_arrow} className='w-4'/>
                         </a>
+                        {techStack && (
+                            <p className='text-xs text-gray-400 dark:text-gray-500 mt-3 font-MaruBuri'>
+                                {techStack}
+                            </p>
+                        )}
 
                     </motion.div>
                 ))}

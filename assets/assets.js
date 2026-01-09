@@ -128,10 +128,10 @@ export const workData = [
 ]
 
 export const serviceData = [
-    { icon: assets.security_icon, title: 'Security', description: '네트워크 인프라에 대한 깊은 이해를 바탕으로 보안관제, CERT(침해대응), 모의해킹에 이르기까지 보안의 전 과정을 아우르는 통합 솔루션을 제공합니다.', link: 'https://itcase.tistory.com/category/Security' },
-    { icon: assets.development_icon, title: 'Development', description: '웹의 프론트엔드부터 백엔드, 데이터베이스까지 전 과정을 설계하고 구현합니다.', link: 'https://itcase.tistory.com/category/Dev' },
-    { icon: assets.programming_icon, title: 'Programming', description: 'Python과 Java를 중심으로 다양한 코딩 문제를 해결하며 논리적 사고력과 문제 해결 능력을 키우고 있습니다.', link: 'https://itcase.tistory.com/category/Programming' },
-    { icon: assets.cloud_icon, title: 'Cloud Native', description: '보안이 내재화된 클라우드 아키텍처를 설계하고 운영합니다. Terraform을 이용한 IaC 기반 인프라 구축부터 Datadog SIEM을 활용한 통합 모니터링, 그리고 Zero Trust(Auth0, Cloudflare) 체계 중심의 강력한 보안 파이프라인을 실현합니다.', link: 'https://itcase.tistory.com/category/Cloud%20Native' },
+    { icon: assets.security_icon, title: 'Security', description: '보안관제(시스템 보안), CERT(침해대응), 모의해킹에 이르기까지 보안의 전 과정을 아우르는 통합 솔루션을 제공합니다.', link: 'https://itcase.tistory.com/category/Security', techStack: 'Snort | Burp Suite | OWASP Top 10 | Shodan | Google Hacking' },
+    { icon: assets.development_icon, title: 'Development', description: '웹의 프론트엔드부터 백엔드, 데이터베이스까지 전 과정을 안정적으로 설계하고 구현합니다.', link: 'https://itcase.tistory.com/category/Dev', techStack: 'Next.js | Flask | React | MongoDB | OpenAI API' },
+    { icon: assets.programming_icon, title: 'Programming', description: 'Python과 Java를 중심으로 다양한 코딩 문제를 해결하며 논리적 사고력과 문제 해결 능력을 키우고 있습니다.', link: 'https://itcase.tistory.com/category/Programming', techStack: 'Python | Java' },
+    { icon: assets.cloud_icon, title: 'Cloud Native', description: 'AWS 기반의 보안이 내재화된 클라우드 아키텍처를 설계하고 운영합니다.', link: 'https://itcase.tistory.com/category/Cloud%20Native', techStack: 'AWS | Terraform | Datadog SIEM | Zero Trust' },
 ]
 
 export const infoList = [

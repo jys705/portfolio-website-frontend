@@ -147,7 +147,6 @@ export const toolsData = [
     { light: assets.aws, dark: assets.aws_black },
     { light: assets.datadog, dark: assets.datadog },
     { light: assets.git, dark: assets.git },
-    { light: assets.kali, dark: assets.kali },
     { light: assets.snort, dark: assets.snort },
     { light: assets.wireshark, dark: assets.wireshark },
     { light: assets.sys, dark: assets.sys }

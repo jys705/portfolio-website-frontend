@@ -29,9 +29,8 @@ function Work({isDarkMode}) {
         initial={{opacity: 0}}
         whileInView={{opacity: 1}}
         transition={{delay: 0.7, duration: 0.5}}
-        className='text-center max-w-2xl mx-auto mt-5 mb-12 font-Ovo px-2'>
-        Welcome to my web development portfolio! Explore a collection of projects
-        showcasing my expertise in front-end development.</motion.p> 
+        className='text-center max-w-2xl mx-auto mt-5 mb-12 font-MaruBuri px-2'>
+        안전한 클라우드 생태계를 설계하고 운영하는 보안 엔지니어 포트폴리오입니다. SecOps 파이프라인 구축부터 인프라 하드닝, 취약점 진단까지 실제 실무 관점에서 문제를 해결해온 프로젝트들을 확인해 보세요.</motion.p> 
 
     <motion.div 
     initial={{opacity: 0}}

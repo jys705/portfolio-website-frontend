@@ -16,6 +16,7 @@ import git from './git.png';
 import mongodb from './mongodb.png';
 import flask from './flask.png';
 import kali from './kali.png';
+import datadog from './datadog.png';
 import right_arrow_white from './right-arrow-white.png';
 import logo from './logo.png';
 import logo_dark from './logo_dark.png';
@@ -65,6 +66,7 @@ export const assets = {
     git,
     mongodb,
     flask,
+    datadog,
     right_arrow_white,
     logo,
     logo_dark,
@@ -120,10 +122,10 @@ export const workData = [
 ]
 
 export const serviceData = [
-    { icon: assets.security_icon, title: 'Security', description: '인프라, 보안관제, 침해대응&CERT, 모의해킹, 클라우드 보안 기초 과정입니다.', link: 'https://itcase.tistory.com/category/Security' },
+    { icon: assets.security_icon, title: 'Security', description: '네트워크 인프라에 대한 깊은 이해를 바탕으로 보안관제, CERT(침해대응), 모의해킹에 이르기까지 보안의 전 과정을 아우르는 통합 솔루션을 제공합니다.', link: 'https://itcase.tistory.com/category/Security' },
     { icon: assets.development_icon, title: 'Development', description: '웹의 프론트엔드부터 백엔드, 데이터베이스까지 전 과정을 설계하고 구현합니다.', link: 'https://itcase.tistory.com/category/Dev' },
-    { icon: assets.cloud_icon, title: 'Cloud', description: '클라우드는 애플리케이션을 안정적으로 배포하고 확장할 수 있도록 돕는 인프라 환경입니다.', link: 'https://itcase.tistory.com/category/Cloud' },
     { icon: assets.programming_icon, title: 'Programming', description: 'Python과 Java를 중심으로 다양한 코딩 문제를 해결하며 논리적 사고력과 문제 해결 능력을 키우고 있습니다.', link: 'https://itcase.tistory.com/category/Programming' },
+    { icon: assets.cloud_icon, title: 'Cloud Native', description: '보안이 내재화된 클라우드 아키텍처를 설계하고 운영합니다. Terraform을 이용한 IaC 기반 인프라 구축부터 Datadog SIEM을 활용한 통합 모니터링, 그리고 Zero Trust(Auth0, Cloudflare) 체계 중심의 강력한 보안 파이프라인을 실현합니다.', link: 'https://itcase.tistory.com/category/Cloud%20Native' },
 ]
 
 export const infoList = [
@@ -137,6 +139,7 @@ export const toolsData = [
     { light: assets.react, dark: assets.react_black },
     { light: assets.mongodb, dark: assets.mongodb },
     { light: assets.aws, dark: assets.aws_black },
+    { light: assets.datadog, dark: assets.datadog },
     { light: assets.git, dark: assets.git },
     { light: assets.kali, dark: assets.kali }
 ];

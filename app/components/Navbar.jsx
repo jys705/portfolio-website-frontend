@@ -63,7 +63,7 @@ const Navbar = ({isDarkMode, setIsDarkMode}) => {
                     <li><a className='font-Ovo text-nowrap' href="#top">Home</a></li>
                     <li><a className='font-Ovo text-nowrap' href="#about">About me</a></li>
                     <li><a className='font-Ovo text-nowrap' href="#services">Services</a></li>
-                    {/* <li><a className='font-Ovo text-nowrap' href="#work">My work</a></li> */}
+                    <li><a className='font-Ovo text-nowrap' href="#work">My work</a></li>
                     <li><a className='font-Ovo text-nowrap' href="#contact">Contact me</a></li>
                     <li className='relative ml-1'>
                       <a className='font-Ovo text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors relative inline-block text-nowrap' href="#chat">
@@ -100,7 +100,7 @@ const Navbar = ({isDarkMode, setIsDarkMode}) => {
                 <li><a className='font-Ovo' onClick={closeMenu} href="#top">Home</a></li>
                 <li><a className='font-Ovo' onClick={closeMenu} href="#about">About me</a></li>
                 <li><a className='font-Ovo' onClick={closeMenu} href="#services">Services</a></li>
-                {/* <li><a className='font-Ovo' onClick={closeMenu} href="#work">My work</a></li> */}
+                <li><a className='font-Ovo' onClick={closeMenu} href="#work">My work</a></li>
                 <li><a className='font-Ovo' onClick={closeMenu} href="#contact">Contact me</a></li>
                 <li className='mt-2 border-t border-gray-300 dark:border-gray-600 pt-2'>
                   <a className='font-Ovo text-gray-500 dark:text-gray-400' onClick={closeMenu} href="#chat">

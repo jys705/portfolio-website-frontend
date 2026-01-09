@@ -64,7 +64,7 @@ function Work({isDarkMode}) {
         ))}
     </motion.div>
 
-    <motion.a 
+    {/* <motion.a 
     initial={{opacity: 0}}
     whileInView={{opacity: 1}}
     transition={{delay: 1.1, duration: 0.5}}
@@ -75,7 +75,7 @@ function Work({isDarkMode}) {
         Show more  
         <Image src={isDarkMode ? assets.right_arrow_bold_dark : assets.right_arrow_bold} alt='Right arrow'
         className='w-4'/>
-    </motion.a>
+    </motion.a> */}
 
     </motion.div>
   )

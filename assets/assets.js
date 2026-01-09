@@ -128,10 +128,10 @@ export const workData = [
 ]
 
 export const serviceData = [
-    { icon: assets.security_icon, title: 'Security', description: '보안관제(시스템 보안), CERT(침해대응), 모의해킹에 이르기까지 보안의 전 과정을 아우르는 통합 솔루션을 제공합니다.', link: 'https://itcase.tistory.com/category/Security', techStack: 'Snort | Burp Suite | Sysinternals Suite | Shodan | Google Hacking' },
+    { icon: assets.security_icon, title: 'Security', description: '시스템 보안, 웹 보안, 모의해킹에 이르기까지 보안의 전 과정을 아우르는 통합 솔루션을 제공합니다.', link: 'https://itcase.tistory.com/category/Security', techStack: 'Snort | Burp Suite | Sysinternals Suite | Shodan | Google Hacking' },
     { icon: assets.development_icon, title: 'Development', description: '웹의 프론트엔드부터 백엔드, 데이터베이스까지 전 과정을 안정적으로 설계하고 구현합니다.', link: 'https://itcase.tistory.com/category/Dev', techStack: 'Next.js | TypeScript | Flask | MongoDB | OpenAI API' },
-    { icon: assets.programming_icon, title: 'Programming', description: 'Python과 Java를 중심으로 다양한 코딩 문제를 해결하며 논리적 사고력과 문제 해결 능력을 키우고 있습니다.', link: 'https://itcase.tistory.com/category/Programming', techStack: 'Python | Java' },
-    { icon: assets.cloud_icon, title: 'Cloud Native', description: 'AWS 기반의 보안이 내재화된 클라우드 아키텍처를 설계하고 운영합니다.', link: 'https://itcase.tistory.com/category/Cloud%20Native', techStack: 'AWS | Terraform | Datadog SIEM | Zero Trust' },
+    { icon: assets.programming_icon, title: 'Programming', description: 'Python과 Java를 중심으로 다양한 코딩 문제를 해결하며 문제 해결 능력을 키우고 있습니다.', link: 'https://itcase.tistory.com/category/Programming', techStack: 'Python | Java' },
+    { icon: assets.cloud_icon, title: 'Cloud Native', description: 'AWS 기반의 보안이 내재화된 클라우드 아키텍처를 설계하고 운영합니다. 인프라 자동화부터 SecOps 파이프라인을 구성합니다.', link: 'https://itcase.tistory.com/category/Cloud%20Native', techStack: 'AWS | Terraform | Datadog SIEM | Zero Trust' },
 ]
 
 export const infoList = [

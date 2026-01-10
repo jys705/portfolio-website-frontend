@@ -137,7 +137,7 @@ export const workData = [
     },
     {
         title: 'AI Policy Service App (Yuno)',
-        description: 'Frontend',
+        description: 'Frontend (Project Leader)',
         bgImage: '/yuno.png',
         link: 'https://ten-joggers-efc.notion.site/AI-Policy-Service-App-Yuno-2e4c63a47d7d800eb0a5fc00341ad722?source=copy_link'
     },

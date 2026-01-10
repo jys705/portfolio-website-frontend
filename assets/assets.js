@@ -29,7 +29,7 @@ import cloud_icon from './cloud-icon.png';
 import programming_icon from './programming-icon.png';
 import mail_icon from './mail_icon.png';
 import mail_icon_dark from './mail_icon_dark.png';
-import profile_img from './profile-img.png';
+import profile_img from './profile-img2.jpg';
 import download_icon from './download-icon.png';
 import hand_icon from './hand-icon.png';
 import header_bg_color from './header-bg-color.png';
@@ -124,6 +124,16 @@ export const workData = [
         title: 'UI/UX designing',
         description: 'UI/UX Design',
         bgImage: '/work-4.png',
+    },
+    {
+        title: 'E-commerce platform',
+        description: 'Full Stack',
+        bgImage: '/work-1.png',
+    },
+    {
+        title: 'Data visualization',
+        description: 'Web App',
+        bgImage: '/work-2.png',
     },
 ]
 

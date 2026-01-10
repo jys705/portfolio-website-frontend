@@ -33,11 +33,13 @@ function Work({isDarkMode}) {
         안전한 클라우드 생태계를 설계하고 운영하는 보안 엔지니어 포트폴리오입니다.<br />
         SecOps 파이프라인 구축부터 인프라 하드닝, 취약점 진단까지 실제 실무 관점에서 문제를 해결해온 프로젝트들을 확인해 보세요.</motion.p> 
 
+    {/* TEMPORARY: Grid limited to max 3 columns per row. 
+        TODO: Revert to 'grid-cols-auto' for full responsive behavior when needed */}
     <motion.div 
     initial={{opacity: 0}}
     whileInView={{opacity: 1}}
     transition={{delay: 0.9, duration: 0.6}}
-    className='grid grid-cols-auto my-10 gap-5 dark:text-black'>
+    className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 my-10 gap-5 dark:text-black'>
         {workData.map((project, index)=>(
             <motion.div 
             whileHover={{scale: 1.05}}

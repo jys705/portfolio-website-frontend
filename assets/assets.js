@@ -106,33 +106,33 @@ export const assets = {
 
 export const workData = [
     {
-        title: 'Frontend project',
-        description: 'Web Design',
+        title: 'SecOps Pipeline',
+        description: 'Cloud Security',
         bgImage: '/work-1.png',
     },
     {
-        title: 'Geo based app',
-        description: 'Mobile App',
+        title: 'AWS Hardening',
+        description: 'Terraform (IaC)',
         bgImage: '/work-2.png',
     },
     {
-        title: 'Photography site',
-        description: 'Web Design',
+        title: 'Web Pentesting',
+        description: 'Web Security',
         bgImage: '/work-3.png',
     },
     {
-        title: 'UI/UX designing',
-        description: 'UI/UX Design',
+        title: 'SOC & Analysis',
+        description: 'Security Operation',
         bgImage: '/work-4.png',
     },
     {
-        title: 'E-commerce platform',
-        description: 'Full Stack',
+        title: 'OSINT & CERT',
+        description: 'Security Analysis',
         bgImage: '/work-1.png',
     },
     {
-        title: 'Data visualization',
-        description: 'Web App',
+        title: 'AI Policy Service App (Yuno)',
+        description: 'Frontend',
         bgImage: '/work-2.png',
     },
 ]

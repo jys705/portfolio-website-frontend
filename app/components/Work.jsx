@@ -39,14 +39,14 @@ function Work({isDarkMode}) {
     initial={{opacity: 0}}
     whileInView={{opacity: 1}}
     transition={{delay: 0.9, duration: 0.6}}
-    className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 my-10 gap-5 dark:text-black'>
+    className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 my-10 gap-5 dark:text-black justify-items-center'>
         {workData.map((project, index)=>(
             <motion.div 
             whileHover={{scale: 1.05}}
             transition={{duration: 0.3}}
             key={index}
             className='aspect-square bg-no-repeat bg-cover bg-center rounded-lg
-            relative cursor-pointer group' 
+            relative cursor-pointer group w-full max-w-sm' 
             style={{backgroundImage: `url(${project.bgImage})`}}>
                 <div className='bg-white w-10/12 rounded-md absolute bottom-5
                 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center

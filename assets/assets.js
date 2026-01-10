@@ -108,32 +108,38 @@ export const workData = [
     {
         title: 'SecOps Pipeline',
         description: 'Cloud Security',
-        bgImage: '/work-1.png',
+        bgImage: '/SecOps_Pipe.png',
+        link: 'https://ten-joggers-efc.notion.site/SecOps-Pipeline-2e4c63a47d7d80679e28f91c31687fdc?source=copy_link'
     },
     {
         title: 'AWS Hardening',
         description: 'Terraform (IaC)',
-        bgImage: '/work-2.png',
+        bgImage: '/AWS_Hard.png',
+        link: 'https://ten-joggers-efc.notion.site/AWS-Hardening-2e4c63a47d7d8095a181db5339e21ff0?source=copy_link'
     },
     {
         title: 'Web Pentesting',
         description: 'Web Security',
-        bgImage: '/work-3.png',
+        bgImage: '/Web_Pentesting.png',
+        link: 'https://ten-joggers-efc.notion.site/Web-Pentesting-2e4c63a47d7d80218cbae8fa7d76de9b?source=copy_link'
     },
     {
         title: 'SOC & Analysis',
         description: 'Security Operation',
-        bgImage: '/work-4.png',
+        bgImage: '/SOC_Analysis.png',
+        link: 'https://ten-joggers-efc.notion.site/SOC-Analysis-2e4c63a47d7d80b196a4f50de6b86115?source=copy_link'
     },
     {
         title: 'OSINT & CERT',
         description: 'Security Analysis',
-        bgImage: '/work-1.png',
+        bgImage: '/OSINT_CERT.png',
+        link: 'https://ten-joggers-efc.notion.site/OSINT-CERT-2e4c63a47d7d80f68536f425cfdd9a6e?source=copy_link'
     },
     {
         title: 'AI Policy Service App (Yuno)',
         description: 'Frontend',
-        bgImage: '/work-2.png',
+        bgImage: '/yuno.png',
+        link: 'https://ten-joggers-efc.notion.site/AI-Policy-Service-App-Yuno-2e4c63a47d7d800eb0a5fc00341ad722?source=copy_link'
     },
 ]
 

@@ -20,6 +20,8 @@ import datadog from './datadog.png';
 import snort from './snort.png';
 import wireshark from './wireshark.png';
 import sys from './sys.png';
+import terraform from './terraform.png';
+import shodan from './shodan.png';
 import right_arrow_white from './right-arrow-white.png';
 import logo from './logo.png';
 import logo_dark from './logo_dark.png';
@@ -73,6 +75,8 @@ export const assets = {
     snort,
     wireshark,
     sys,
+    terraform,
+    shodan,
     right_arrow_white,
     logo,
     logo_dark,
@@ -124,7 +128,7 @@ export const workData = [
         link: 'https://ten-joggers-efc.notion.site/Web-Pentesting-2e4c63a47d7d80218cbae8fa7d76de9b?source=copy_link'
     },
     {
-        title: 'SOC & Analysis',
+        title: 'System Analysis',
         description: 'Security Operation',
         bgImage: '/SOC_Analysis.png',
         link: 'https://ten-joggers-efc.notion.site/SOC-Analysis-2e4c63a47d7d80b196a4f50de6b86115?source=copy_link'
@@ -151,18 +155,18 @@ export const serviceData = [
 ]
 
 export const infoList = [
-    { icon: assets.code_icon, iconDark: assets.code_icon_dark, title: 'Languages', description: 'Python, Java, HTML, CSS, JavaScript(React), Next.Js' },
+    { icon: assets.code_icon, iconDark: assets.code_icon_dark, title: 'Languages', description: 'Python, Java, HTML, CSS, JavaScript(React/Next.Js)' },
     { icon: assets.edu_icon, iconDark: assets.edu_icon_dark, title: 'Education', description: 'Kookmin University — School of Software' },
     { icon: assets.project_icon, iconDark: assets.project_icon_dark, title: 'Projects', description: 'Built more than 6 projects' }
 ];
 
 export const toolsData = [
-    { light: assets.vscode, dark: assets.vscode },
-    { light: assets.react, dark: assets.react_black },
     { light: assets.mongodb, dark: assets.mongodb },
     { light: assets.aws, dark: assets.aws_black },
+    { light: assets.terraform, dark: assets.terraform },
     { light: assets.datadog, dark: assets.datadog },
     { light: assets.git, dark: assets.git },
+    { light: assets.shodan, dark: assets.shodan },
     { light: assets.snort, dark: assets.snort },
     { light: assets.wireshark, dark: assets.wireshark },
     { light: assets.sys, dark: assets.sys }

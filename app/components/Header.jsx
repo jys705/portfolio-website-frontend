@@ -67,12 +67,14 @@ const Header = () => {
   return (
     <div className='w-full max-w-[100vw] text-center px-4 mx-auto h-screen flex flex-col
     items-center justify-center gap-4'>
-      <div className='relative w-32 h-32'>
+      <div className='relative w-32 h-32 overflow-hidden rounded-full'>
             {profileImg && (
               <Image 
                 src={profileImg} 
                 alt='' 
-                className={`rounded-full w-32 h-32 object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                className={`w-32 h-32 object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'} ${
+                  profileImg === assets.profile_img1 ? 'object-[center_20%]' : 'object-center'
+                }`}
                 onLoad={() => setImageLoaded(true)}
               />
             )}

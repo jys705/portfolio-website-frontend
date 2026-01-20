@@ -1,4 +1,4 @@
-import { put } from '@vercel/blob';
+import { put, del, list } from '@vercel/blob';
 import clientPromise from '@/lib/mongodb';
 import { NextResponse } from 'next/server';
 
@@ -32,9 +32,26 @@ export async function POST(request) {
     }
 
     console.log('[POST] Uploading resume to Vercel Blob...');
+
+    // 기존 이력서 파일 삭제 (중복 방지)
+    try {
+      const client = await clientPromise;
+      const database = client.db('portfolioDB');
+      const settings = database.collection('settings');
+      const existingResume = await settings.findOne({ key: 'resumeUrl' });
+      
+      if (existingResume?.url && !existingResume.isDefault) {
+        console.log('[POST] Deleting old resume from Blob:', existingResume.url);
+        await del(existingResume.url);
+        console.log('[POST] Old resume deleted successfully');
+      }
+    } catch (deleteError) {
+      console.warn('[POST] Failed to delete old resume:', deleteError.message);
+      // 삭제 실패해도 계속 진행
+    }
     
-    // Vercel Blob에 업로드
-    const blob = await put(`resume-${Date.now()}.pdf`, file, {
+    // Vercel Blob에 업로드 (고정된 파일명 사용)
+    const blob = await put('정연승_이력서.pdf', file, {
       access: 'public',
       addRandomSuffix: false,
     });

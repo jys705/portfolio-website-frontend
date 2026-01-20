@@ -5,6 +5,7 @@ import { motion } from "motion/react"
 
 const Header = () => {
   const [profileImg, setProfileImg] = useState(assets.profile_img2);
+  const [resumeUrl, setResumeUrl] = useState('/정연승_이력서.pdf');
 
   useEffect(() => {
     const fetchProfileImage = async () => {
@@ -22,8 +23,21 @@ const Header = () => {
         console.error('Failed to fetch profile image:', error);
       }
     };
+
+    const fetchResumeUrl = async () => {
+      try {
+        const res = await fetch('/api/resume');
+        const data = await res.json();
+        if (data.success && data.url) {
+          setResumeUrl(data.url);
+        }
+      } catch (error) {
+        console.error('Failed to fetch resume URL:', error);
+      }
+    };
     
     fetchProfileImage();
+    fetchResumeUrl();
   }, []);
 
   return (
@@ -69,7 +83,7 @@ const Header = () => {
             initial={{y: 30, opacity: 0}}
             whileInView={{y: 0, opacity: 1}}
             transition={{duration: 0.6, delay: 1.2}}
-            href="/정연승_이력서.pdf" download
+            href={resumeUrl} download
             className='px-10 py-3 border rounded-full border-gray-500 flex
             items-center gap-2 bg-white dark:text-black'>my resume <Image src={assets.download_icon} alt=''
             className='w-4'/></motion.a>

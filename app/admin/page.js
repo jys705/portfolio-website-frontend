@@ -9,6 +9,9 @@ export default function AdminDashboard() {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [selectedProfile, setSelectedProfile] = useState('profile-img2.jpg');
   const [saveStatus, setSaveStatus] = useState('');
+  const [resumeFile, setResumeFile] = useState(null);
+  const [resumeStatus, setResumeStatus] = useState('');
+  const [currentResume, setCurrentResume] = useState(null);
 
   useEffect(() => {
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -21,6 +24,7 @@ export default function AdminDashboard() {
     
     // 현재 설정된 프로필 이미지 불러오기
     fetchCurrentProfile();
+    fetchCurrentResume();
   }, []);
 
   const fetchCurrentProfile = async () => {
@@ -32,6 +36,18 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       console.error('Failed to fetch profile settings:', error);
+    }
+  };
+
+  const fetchCurrentResume = async () => {
+    try {
+      const res = await fetch('/api/resume');
+      const data = await res.json();
+      if (data.success) {
+        setCurrentResume(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch resume:', error);
     }
   };
 
@@ -56,6 +72,51 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error('Failed to save profile settings:', error);
       setSaveStatus('error');
+    }
+  };
+
+  const handleResumeUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // 파일 유효성 검사
+    if (file.type !== 'application/pdf') {
+      setResumeStatus('error');
+      alert('PDF 파일만 업로드 가능합니다.');
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      setResumeStatus('error');
+      alert('파일 크기는 10MB 이하여야 합니다.');
+      return;
+    }
+
+    setResumeFile(file);
+    setResumeStatus('uploading');
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/resume', {
+        method: 'POST',
+        body: formData
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setResumeStatus('success');
+        setCurrentResume({ ...data, isDefault: false });
+        setTimeout(() => setResumeStatus(''), 3000);
+      } else {
+        setResumeStatus('error');
+        alert(data.error || '업로드 실패');
+      }
+    } catch (error) {
+      console.error('Failed to upload resume:', error);
+      setResumeStatus('error');
+      alert('업로드 중 오류가 발생했습니다.');
     }
   };
 
@@ -300,11 +361,146 @@ export default function AdminDashboard() {
           </div>
         </motion.div>
 
+        {/* Resume Upload Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mb-12"
+        >
+          <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-xl p-8 border border-gray-200 dark:border-gray-800">
+            {/* Section Header */}
+            <div className="flex items-center gap-4 mb-8 pb-6 border-b border-gray-200 dark:border-gray-800">
+              <div className="p-3 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white font-MaruBuri mb-1">
+                  이력서 관리
+                </h3>
+                <p className="text-gray-500 dark:text-gray-400 text-sm font-MaruBuri">
+                  Home 섹션의 "my resume" 버튼에서 다운로드될 이력서를 업로드하세요
+                </p>
+              </div>
+            </div>
+
+            {/* Current Resume Info */}
+            {currentResume && (
+              <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg">
+                      <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clipRule="evenodd" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-gray-900 dark:text-white font-MaruBuri">
+                        {currentResume.filename}
+                      </p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 font-MaruBuri">
+                        {currentResume.isDefault ? '기본 이력서' : `업로드: ${new Date(currentResume.uploadedAt).toLocaleString('ko-KR')}`}
+                      </p>
+                    </div>
+                  </div>
+                  <a
+                    href={currentResume.url}
+                    download
+                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-semibold transition-colors font-MaruBuri"
+                  >
+                    다운로드
+                  </a>
+                </div>
+              </div>
+            )}
+
+            {/* Upload Area */}
+            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 text-center hover:border-green-500 dark:hover:border-green-500 transition-colors">
+              <input
+                type="file"
+                accept="application/pdf"
+                onChange={handleResumeUpload}
+                className="hidden"
+                id="resume-upload"
+              />
+              <label
+                htmlFor="resume-upload"
+                className="cursor-pointer block"
+              >
+                <div className="flex flex-col items-center gap-4">
+                  <div className="p-4 bg-green-100 dark:bg-green-900/30 rounded-full">
+                    <svg className="w-12 h-12 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-lg font-semibold text-gray-900 dark:text-white mb-1 font-MaruBuri">
+                      PDF 파일을 선택하거나 드래그하세요
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 font-MaruBuri">
+                      최대 10MB, PDF 형식만 가능합니다
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all font-MaruBuri"
+                  >
+                    파일 선택
+                  </button>
+                </div>
+              </label>
+            </div>
+
+            {/* Upload Status */}
+            {resumeStatus && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`mt-6 p-4 rounded-xl flex items-center gap-3 font-MaruBuri font-semibold ${
+                  resumeStatus === 'success' 
+                    ? 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-200 dark:border-green-800'
+                    : resumeStatus === 'uploading'
+                    ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800'
+                    : 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800'
+                }`}
+              >
+                {resumeStatus === 'success' && (
+                  <>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>이력서가 성공적으로 업로드되었습니다!</span>
+                  </>
+                )}
+                {resumeStatus === 'uploading' && (
+                  <>
+                    <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>업로드 중...</span>
+                  </>
+                )}
+                {resumeStatus === 'error' && (
+                  <>
+                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                    <span>업로드 실패</span>
+                  </>
+                )}
+              </motion.div>
+            )}
+          </div>
+        </motion.div>
+
         {/* Info Card */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 rounded-2xl p-8 border border-blue-100 dark:border-gray-700"
         >
           <div className="flex items-start gap-4">

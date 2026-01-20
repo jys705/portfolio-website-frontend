@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@vercel/blob": "^2.0.0",
     "axios": "^1.9.0",
     "mongodb": "^4.17.2",
     "motion": "^12.6.2",

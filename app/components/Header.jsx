@@ -6,6 +6,7 @@ import { motion } from "motion/react"
 const Header = () => {
   const [profileImg, setProfileImg] = useState(null);
   const [resumeUrl, setResumeUrl] = useState('/정연승_이력서.pdf');
+  const [resumeFilename, setResumeFilename] = useState('정연승_이력서.pdf');
   const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
@@ -33,6 +34,7 @@ const Header = () => {
         const data = await res.json();
         if (data.success && data.url) {
           setResumeUrl(data.url);
+          setResumeFilename(data.filename || '정연승_이력서.pdf');
         }
       } catch (error) {
         console.error('Failed to fetch resume URL:', error);
@@ -52,7 +54,7 @@ const Header = () => {
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = '정연승_이력서.pdf';
+      a.download = resumeFilename;
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -67,13 +69,13 @@ const Header = () => {
   return (
     <div className='w-full max-w-[100vw] text-center px-4 mx-auto h-screen flex flex-col
     items-center justify-center gap-4'>
-      <div className='relative w-32 h-32 overflow-hidden rounded-full'>
+      <div className='relative w-32 h-32 overflow-hidden rounded-full bg-white dark:bg-gray-800'>
             {profileImg && (
               <Image 
                 src={profileImg} 
                 alt='' 
-                className={`w-32 h-32 object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'} ${
-                  profileImg === assets.profile_img1 ? 'object-[center_20%]' : 'object-center'
+                className={`w-full h-full transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'} ${
+                  profileImg === assets.profile_img1 ? 'object-contain scale-110' : 'object-cover object-center'
                 }`}
                 onLoad={() => setImageLoaded(true)}
               />

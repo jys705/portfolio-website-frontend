@@ -6,7 +6,7 @@ export async function GET() {
     const client = await clientPromise;
     console.log('[GET] MongoDB client connected');
     
-    const database = client.db('portfolio');
+    const database = client.db('admin');
     const settings = database.collection('settings');
     
     const profileSetting = await settings.findOne({ key: 'profileImage' });
@@ -48,7 +48,7 @@ export async function POST(request) {
     const client = await clientPromise;
     console.log('[POST] MongoDB client connected');
     
-    const database = client.db('portfolio');
+    const database = client.db('admin');
     const settings = database.collection('settings');
     
     console.log('[POST] Updating settings with profileImage:', profileImage);

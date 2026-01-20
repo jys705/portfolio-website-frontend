@@ -12,6 +12,7 @@ export default function AdminDashboard() {
   const [resumeFile, setResumeFile] = useState(null);
   const [resumeStatus, setResumeStatus] = useState('');
   const [currentResume, setCurrentResume] = useState(null);
+  const [isResetting, setIsResetting] = useState(false);
 
   useEffect(() => {
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -122,6 +123,39 @@ export default function AdminDashboard() {
       setResumeStatus('error');
       alert('업로드 중 오류가 발생했습니다.');
       e.target.value = ''; // input 리셋
+    }
+  };
+
+  const handleResumeReset = async () => {
+    if (!confirm('정말로 현재 이력서를 삭제하고 초기화하시겠습니까?\n\n모든 업로드된 이력서 파일이 삭제되고 기본 이력서로 돌아갑니다.')) {
+      return;
+    }
+
+    setIsResetting(true);
+    setResumeStatus('');
+
+    try {
+      const res = await fetch('/api/resume/reset', {
+        method: 'POST'
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        alert(`초기화 완료!\n삭제된 파일: ${data.deletedFiles}개`);
+        // 페이지 새로고침하여 기본 상태로 복원
+        await fetchCurrentResume();
+        setResumeStatus('success');
+        setTimeout(() => setResumeStatus(''), 3000);
+      } else {
+        alert('초기화 실패: ' + data.error);
+        setResumeStatus('error');
+      }
+    } catch (error) {
+      console.error('Failed to reset resume:', error);
+      alert('초기화 중 오류가 발생했습니다.');
+      setResumeStatus('error');
+    } finally {
+      setIsResetting(false);
     }
   };
 
@@ -394,7 +428,7 @@ export default function AdminDashboard() {
             {/* Current Resume Info */}
             {currentResume && (
               <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-xl">
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between flex-wrap gap-3">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-red-100 dark:bg-red-900/30 rounded-lg">
                       <svg className="w-5 h-5 text-red-600 dark:text-red-400" fill="currentColor" viewBox="0 0 20 20">
@@ -410,13 +444,24 @@ export default function AdminDashboard() {
                       </p>
                     </div>
                   </div>
-                  <a
-                    href={currentResume.url}
-                    download
-                    className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-semibold transition-colors font-MaruBuri"
-                  >
-                    다운로드
-                  </a>
+                  <div className="flex gap-2">
+                    <a
+                      href={currentResume.url}
+                      download
+                      className="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-sm font-semibold transition-colors font-MaruBuri"
+                    >
+                      다운로드
+                    </a>
+                    {!currentResume.isDefault && (
+                      <button
+                        onClick={handleResumeReset}
+                        disabled={isResetting}
+                        className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold transition-colors font-MaruBuri disabled:opacity-50 disabled:cursor-not-allowed"
+                      >
+                        {isResetting ? '삭제 중...' : '초기화'}
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             )}

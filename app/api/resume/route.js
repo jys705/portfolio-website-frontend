@@ -33,18 +33,19 @@ export async function POST(request) {
 
     console.log('[POST] Uploading resume to Vercel Blob...');
 
-    // 기존 이력서 파일 삭제 (중복 방지)
+    // 기존 이력서 파일 모두 삭제 (중복 방지)
     try {
-      const client = await clientPromise;
-      const database = client.db('portfolioDB');
-      const settings = database.collection('settings');
-      const existingResume = await settings.findOne({ key: 'resumeUrl' });
+      // Blob에서 모든 PDF 파일 조회 및 삭제
+      const { blobs } = await list();
+      console.log('[POST] Found blobs:', blobs.length);
       
-      if (existingResume?.url && !existingResume.isDefault) {
-        console.log('[POST] Deleting old resume from Blob:', existingResume.url);
-        await del(existingResume.url);
-        console.log('[POST] Old resume deleted successfully');
+      for (const blob of blobs) {
+        if (blob.pathname.endsWith('.pdf')) {
+          console.log('[POST] Deleting blob:', blob.pathname);
+          await del(blob.url);
+        }
       }
+      console.log('[POST] All old resume files deleted successfully');
     } catch (deleteError) {
       console.warn('[POST] Failed to delete old resume:', deleteError.message);
       // 삭제 실패해도 계속 진행

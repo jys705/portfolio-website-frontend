@@ -61,7 +61,7 @@ export default function AdminDashboard() {
 
   const profileOptions = [
     { 
-      name: 'profile-img1.JPG', 
+      name: 'profile-img1.jpg', 
       image: assets.profile_img1, 
       label: '프로필 이미지 1',
       description: '정식 프로필 사진'

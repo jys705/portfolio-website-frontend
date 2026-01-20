@@ -13,7 +13,7 @@ const About = ({isDarkMode}) => {
         const data = await res.json();
         if (data.success) {
           setProfileImg(
-            data.profileImage === 'profile-img1.JPG' 
+            data.profileImage === 'profile-img1.jpg' 
               ? assets.profile_img1 
               : assets.profile_img2
           );

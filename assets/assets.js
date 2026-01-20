@@ -31,7 +31,7 @@ import programming_icon from './programming-icon.png';
 import mail_icon from './mail_icon.png';
 import mail_icon_dark from './mail_icon_dark.png';
 import profile_img from './profile-img2.jpg';
-import profile_img1 from './profile-img1.JPG';
+import profile_img1 from './profile-img1.jpg';
 import profile_img2 from './profile-img2.jpg';
 import download_icon from './download-icon.png';
 import hand_icon from './hand-icon.png';

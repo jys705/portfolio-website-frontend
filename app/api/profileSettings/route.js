@@ -1,12 +1,8 @@
-import { MongoClient } from 'mongodb';
-
-const uri = process.env.MONGODB_URI;
+import clientPromise from '@/lib/mongodb';
 
 export async function GET() {
-  let client;
   try {
-    client = new MongoClient(uri);
-    await client.connect();
+    const client = await clientPromise;
     const database = client.db('portfolio');
     const settings = database.collection('settings');
     
@@ -22,20 +18,14 @@ export async function GET() {
       success: false, 
       error: error.message 
     }, { status: 500 });
-  } finally {
-    if (client) {
-      await client.close();
-    }
   }
 }
 
 export async function POST(request) {
-  let client;
   try {
     const { profileImage } = await request.json();
     
-    client = new MongoClient(uri);
-    await client.connect();
+    const client = await clientPromise;
     const database = client.db('portfolio');
     const settings = database.collection('settings');
     
@@ -55,9 +45,5 @@ export async function POST(request) {
       success: false, 
       error: error.message 
     }, { status: 500 });
-  } finally {
-    if (client) {
-      await client.close();
-    }
   }
 }

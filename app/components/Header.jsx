@@ -1,14 +1,36 @@
 import { assets } from '@/assets/assets'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { motion } from "motion/react"
 
 const Header = () => {
+  const [profileImg, setProfileImg] = useState(assets.profile_img2);
+
+  useEffect(() => {
+    const fetchProfileImage = async () => {
+      try {
+        const res = await fetch('/api/profileSettings');
+        const data = await res.json();
+        if (data.success) {
+          setProfileImg(
+            data.profileImage === 'profile-img1.JPG' 
+              ? assets.profile_img1 
+              : assets.profile_img2
+          );
+        }
+      } catch (error) {
+        console.error('Failed to fetch profile image:', error);
+      }
+    };
+    
+    fetchProfileImage();
+  }, []);
+
   return (
     <div className='w-full max-w-[100vw] text-center px-4 mx-auto h-screen flex flex-col
     items-center justify-center gap-4'>
       <div>
-            <Image src={assets.profile_img} alt='' className='rounded-full w-32'/>
+            <Image src={profileImg} alt='' className='rounded-full w-32'/>
       </div>
       <motion.h3
       initial={{y: -20, opacity: 0}}

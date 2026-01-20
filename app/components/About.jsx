@@ -1,9 +1,31 @@
 import { assets, infoList, toolsData } from '@/assets/assets'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {motion} from "motion/react"
 
 const About = ({isDarkMode}) => {
+  const [profileImg, setProfileImg] = useState(assets.profile_img2);
+
+  useEffect(() => {
+    const fetchProfileImage = async () => {
+      try {
+        const res = await fetch('/api/profileSettings');
+        const data = await res.json();
+        if (data.success) {
+          setProfileImg(
+            data.profileImage === 'profile-img1.JPG' 
+              ? assets.profile_img1 
+              : assets.profile_img2
+          );
+        }
+      } catch (error) {
+        console.error('Failed to fetch profile image:', error);
+      }
+    };
+    
+    fetchProfileImage();
+  }, []);
+
   return (
     <motion.div id='about' className='w-full max-w-[100vw] px-4 sm:px-8 md:px-[12%] py-10 scroll-mt-20'
     initial={{opacity: 0}}
@@ -34,7 +56,7 @@ const About = ({isDarkMode}) => {
             whileInView={{opacity: 1, scale: 1}}
             transition={{duration: 0.6}}
             className='w-64 sm:w-80 rounded-3xl max-w-none'>
-                <Image src={assets.profile_img} alt='user' className='w-full
+                <Image src={profileImg} alt='user' className='w-full
                 rounded-3xl'/>
             </motion.div>
             <motion.div 

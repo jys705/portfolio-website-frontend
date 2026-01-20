@@ -4,8 +4,9 @@ import Image from 'next/image'
 import { motion } from "motion/react"
 
 const Header = () => {
-  const [profileImg, setProfileImg] = useState(assets.profile_img2);
+  const [profileImg, setProfileImg] = useState(null);
   const [resumeUrl, setResumeUrl] = useState('/정연승_이력서.pdf');
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     const fetchProfileImage = async () => {
@@ -13,14 +14,16 @@ const Header = () => {
         const res = await fetch('/api/profileSettings');
         const data = await res.json();
         if (data.success) {
-          setProfileImg(
-            data.profileImage === 'profile-img1.jpg' 
-              ? assets.profile_img1 
-              : assets.profile_img2
-          );
+          const selectedImage = data.profileImage === 'profile-img1.jpg' 
+            ? assets.profile_img1 
+            : assets.profile_img2;
+          setProfileImg(selectedImage);
+        } else {
+          setProfileImg(assets.profile_img2);
         }
       } catch (error) {
         console.error('Failed to fetch profile image:', error);
+        setProfileImg(assets.profile_img2);
       }
     };
 
@@ -40,11 +43,42 @@ const Header = () => {
     fetchResumeUrl();
   }, []);
 
+  const handleResumeDownload = async (e) => {
+    e.preventDefault();
+    
+    try {
+      const response = await fetch(resumeUrl);
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = '정연승_이력서.pdf';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error('Failed to download resume:', error);
+      // 실패 시 기본 다운로드 시도
+      window.open(resumeUrl, '_blank');
+    }
+  };
+
   return (
     <div className='w-full max-w-[100vw] text-center px-4 mx-auto h-screen flex flex-col
     items-center justify-center gap-4'>
-      <div>
-            <Image src={profileImg} alt='' className='rounded-full w-32'/>
+      <div className='relative w-32 h-32'>
+            {profileImg && (
+              <Image 
+                src={profileImg} 
+                alt='' 
+                className={`rounded-full w-32 h-32 object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setImageLoaded(true)}
+              />
+            )}
+            {!imageLoaded && (
+              <div className='absolute inset-0 rounded-full bg-gray-200 dark:bg-gray-700 animate-pulse' />
+            )}
       </div>
       <motion.h3
       initial={{y: -20, opacity: 0}}
@@ -79,14 +113,15 @@ const Header = () => {
             contact me <Image src={assets.right_arrow_white} alt='' 
             className='w-4'/></motion.a>
 
-            <motion.a
+            <motion.button
             initial={{y: 30, opacity: 0}}
             whileInView={{y: 0, opacity: 1}}
             transition={{duration: 0.6, delay: 1.2}}
-            href={resumeUrl} download
+            onClick={handleResumeDownload}
             className='px-10 py-3 border rounded-full border-gray-500 flex
-            items-center gap-2 bg-white dark:text-black'>my resume <Image src={assets.download_icon} alt=''
-            className='w-4'/></motion.a>
+            items-center gap-2 bg-white dark:text-black cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors'>
+            my resume <Image src={assets.download_icon} alt=''
+            className='w-4'/></motion.button>
         </div>
     </div>
   )

@@ -83,12 +83,14 @@ export default function AdminDashboard() {
     if (file.type !== 'application/pdf') {
       setResumeStatus('error');
       alert('PDF 파일만 업로드 가능합니다.');
+      e.target.value = ''; // input 리셋
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
       setResumeStatus('error');
       alert('파일 크기는 10MB 이하여야 합니다.');
+      e.target.value = ''; // input 리셋
       return;
     }
 
@@ -109,14 +111,17 @@ export default function AdminDashboard() {
         setResumeStatus('success');
         setCurrentResume({ ...data, isDefault: false });
         setTimeout(() => setResumeStatus(''), 3000);
+        e.target.value = ''; // input 리셋 - 같은 파일을 다시 선택할 수 있게
       } else {
         setResumeStatus('error');
         alert(data.error || '업로드 실패');
+        e.target.value = ''; // input 리셋
       }
     } catch (error) {
       console.error('Failed to upload resume:', error);
       setResumeStatus('error');
       alert('업로드 중 오류가 발생했습니다.');
+      e.target.value = ''; // input 리셋
     }
   };
 
